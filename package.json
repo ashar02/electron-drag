@@ -1,7 +1,11 @@
 {
-  "name": "electron-drag",
-  "version": "2.0.0",
+  "name": "@ashar02/electron-drag",
+  "version": "2.0.1",
   "description": "Window dragging for electron applications",
+  "author": {
+    "name": "ashar",
+    "email": "ashar_02@hotmail.com"
+  },
   "main": "index.js",
   "scripts": {
     "lint": "standard",
@@ -10,7 +14,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kapetan/electron-drag"
+    "url": "https://github.com/ashar02/electron-drag"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/ashar02"
   },
   "keywords": [
     "electron",
