@@ -16,12 +16,12 @@ Versions of this library above version 2.0.0 require `Electron` which support `N
 
 # Usage
 
-	npm install electron-drag
+	npm install @ashar02/electron-drag
 
 Require the module in an `Electron` web page.
 
 ```javascript
-var drag = require('electron-drag')
+var drag = require('@ashar02/electron-drag')
 
 // Pass a query selector or a dom element to the function.
 // Dragging the element will drag the whole window.
