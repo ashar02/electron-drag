@@ -1,6 +1,6 @@
 {
   "name": "@ashar02/electron-drag",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Window dragging for electron applications",
   "author": {
     "name": "ashar",
@@ -27,9 +27,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kapetan/electron-drag/issues"
+    "url": "https://github.com/ashar02/electron-drag/issues"
   },
-  "homepage": "https://github.com/kapetan/electron-drag",
+  "homepage": "https://github.com/ashar02/electron-drag",
   "optionalDependencies": {
     "osx-mouse": "^2.0.0",
     "win-mouse": "^2.0.1"
