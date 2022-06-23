@@ -7,15 +7,11 @@ var mouseConstructor = tryRequire('osx-mouse') || tryRequire('win-mouse')
 
 var supported = !!mouseConstructor
 var noop = function () { return noop }
-var windowWidth = 0
-var windowHeight = 0
 var isResizable = null
 var size = null
 
-var drag = function (element, width, height) {
+var drag = function (element) {
   element = $(element)
-  windowWidth = width
-  windowHeight = height
 
   var offset = null
   var mouse = mouseConstructor()
@@ -45,13 +41,11 @@ var drag = function (element, width, height) {
 
   mouse.on('left-up', function () {
     offset = null
-    windowWidth = 0
-    windowHeight = 0
     size = null
     if (isResizable) {
       remote.getCurrentWindow().setResizable(true)
-      isResizable = null
     }
+    isResizable = null
   })
 
   return function () {
