@@ -9,6 +9,8 @@ var supported = !!mouseConstructor
 var noop = function () { return noop }
 var windowWidth = 0
 var windowHeight = 0
+var isResizable = null
+var size = null
 
 var drag = function (element, width, height) {
   element = $(element)
@@ -20,6 +22,11 @@ var drag = function (element, width, height) {
 
   var onmousedown = function (e) {
     offset = [e.clientX, e.clientY]
+    size = remote.getCurrentWindow().getSize()
+    isResizable = remote.getCurrentWindow().isResizable()
+    if (isResizable) {
+      win.setResizable(false)
+    }
   }
 
   element.on('mousedown', onmousedown)
@@ -31,13 +38,20 @@ var drag = function (element, width, height) {
     x = Math.round(pos.x - offset[0])
     y = Math.round(pos.y - offset[1])
 
-    remote.getCurrentWindow().setBounds({width: windowWidth, height: windowHeight, x: x, y: y})
+    if (size) {
+      remote.getCurrentWindow().setBounds({width: size[0], height: size[1], x: x, y: y})
+    }
   })
 
   mouse.on('left-up', function () {
     offset = null
     windowWidth = 0
     windowHeight = 0
+    size = null
+    if (isResizable) {
+      remote.getCurrentWindow().setResizable(true)
+      isResizable = null
+    }
   })
 
   return function () {
