@@ -35,7 +35,7 @@ var drag = function (element) {
     y = Math.round(pos.y - offset[1])
 
     if (size) {
-      remote.getCurrentWindow().setBounds({width: size[0], height: size[1], x: x, y: y})
+      remote.getCurrentWindow().setBounds({x: x, y: y, width: size[0], height: size[1]})
     }
   })
 
