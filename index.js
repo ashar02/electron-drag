@@ -7,13 +7,13 @@ var mouseConstructor = tryRequire('osx-mouse') || tryRequire('win-mouse')
 
 var supported = !!mouseConstructor
 var noop = function () { return noop }
-var isResizable = null
-var size = null
 
 var drag = function (element) {
   element = $(element)
 
   var offset = null
+  var isResizable = null
+  var size = null
   var mouse = mouseConstructor()
 
   var onmousedown = function (e) {

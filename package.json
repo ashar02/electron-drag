@@ -1,6 +1,6 @@
 {
   "name": "@ashar02/electron-drag",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Window dragging for electron applications",
   "author": {
     "name": "ashar",
