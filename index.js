@@ -21,7 +21,7 @@ var drag = function (element) {
     size = remote.getCurrentWindow().getSize()
     isResizable = remote.getCurrentWindow().isResizable()
     if (isResizable) {
-      win.setResizable(false)
+      remote.getCurrentWindow().setResizable(false)
     }
   }
 
