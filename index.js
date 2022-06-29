@@ -8,48 +8,52 @@ var mouseConstructor = tryRequire('osx-mouse') || tryRequire('win-mouse')
 var supported = !!mouseConstructor
 var noop = function () { return noop }
 
-var drag = function (element) {
-  element = $(element)
+var offset = null
+var isResizable = null
+var size = null
+var mouse = mouseConstructor()
+var curElement = null
 
-  var offset = null
-  var isResizable = null
-  var size = null
-  var mouse = mouseConstructor()
+mouse.on('left-drag', function (x, y) {
+  if (!offset) return
 
-  var onmousedown = function (e) {
-    offset = [e.clientX, e.clientY]
-    size = remote.getCurrentWindow().getSize()
-    isResizable = remote.getCurrentWindow().isResizable()
-    if (isResizable) {
-      remote.getCurrentWindow().setResizable(false)
-    }
+  const pos = remote.screen.getCursorScreenPoint()
+  x = Math.round(pos.x - offset[0])
+  y = Math.round(pos.y - offset[1])
+
+  if (size) {
+    remote.getCurrentWindow().setBounds({x: x, y: y, width: size[0], height: size[1]})
   }
+})
 
-  element.on('mousedown', onmousedown)
+mouse.on('left-up', function () {
+  offset = null
+  size = null
+  if (isResizable) {
+    remote.getCurrentWindow().setResizable(true)
+  }
+  isResizable = null
+})
 
-  mouse.on('left-drag', function (x, y) {
-    if (!offset) return
+var onmousedown = function (e) {
+  offset = [e.clientX, e.clientY]
+  size = remote.getCurrentWindow().getSize()
+  isResizable = remote.getCurrentWindow().isResizable()
+  if (isResizable) {
+    remote.getCurrentWindow().setResizable(false)
+  }
+}
 
-    const pos = remote.screen.getCursorScreenPoint()
-    x = Math.round(pos.x - offset[0])
-    y = Math.round(pos.y - offset[1])
-
-    if (size) {
-      remote.getCurrentWindow().setBounds({x: x, y: y, width: size[0], height: size[1]})
-    }
-  })
-
-  mouse.on('left-up', function () {
-    offset = null
-    size = null
-    if (isResizable) {
-      remote.getCurrentWindow().setResizable(true)
-    }
-    isResizable = null
-  })
+var drag = function (element) {
+  if (curElement) {
+    curElement.off('mousedown', onmousedown)
+  }
+  curElement = $(element)
+  curElement.on('mousedown', onmousedown)
 
   return function () {
-    element.off('mousedown', onmousedown)
+    curElement.off('mousedown', onmousedown)
+    curElement = null
     mouse.destroy()
   }
 }
