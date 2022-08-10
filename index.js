@@ -51,7 +51,16 @@ var drag = function (element) {
   curElement = $(element)
   curElement.on('mousedown', onmousedown)
 
-  return function () {
+  return function (clearVarsOnly) {
+    if (clearVarsOnly) {
+      offset = null
+      size = null
+      if (isResizable) {
+        remote.getCurrentWindow().setResizable(true)
+      }
+      isResizable = null
+      return;
+    }
     curElement.off('mousedown', onmousedown)
     curElement = null
     mouse.destroy()
